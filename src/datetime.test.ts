@@ -1,4 +1,5 @@
-import DateTime, {Day, InvalidDateException} from "./datetime";
+import DateTime, {Day, Month, InvalidDateException} from "./datetime";
+import {MESSAGES} from "./dpmessages"
 
 describe("dateTimeのテスト", () => {
   test("コンストラクタにパラメータを指定しない場合でも、初期化に成功する", () => {
@@ -49,6 +50,28 @@ describe("dateTimeのテスト", () => {
           expect(true).toBeFalsy()
         }).toThrowError(InvalidDateException)
       })
+
+      test.each([2, 4, 6, 9, 11] as Month[])("日付に31日を指定するとエラーになる: %i月", (m) => {
+        const dt = new DateTime({month: m, day: 1})
+        expect(() => {
+          dt.setDate(31)
+        }).toThrowError(MESSAGES.ERROR.InvalidDayWithout31Day)
+      })
+
+      test.each([1, 2, 3, 4, 27, 28, 29, 30])("日付を設定する: %i日", (d) => {
+        const months: Month[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+        months.forEach(m => {
+          if (m === 2 && d >= 28) {
+            // 2月のうるう年を考慮し、28以降はテストしない.
+          } else {
+            const dt = new DateTime({month: m})
+            dt.setDate(d)
+            expect(dt.getMonth()).toBe(m)
+            expect(dt.getDate()).toBe(d)
+          }
+        })
+      })
+
     })
   })
 })

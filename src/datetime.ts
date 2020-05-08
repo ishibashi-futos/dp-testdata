@@ -1,3 +1,5 @@
+import {MESSAGES} from "./dpmessages"
+
 export type Month = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12
 export type Day = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19 | 20 | 21 | 22 | 23 | 24 | 25 | 26 | 27 | 28 | 29 | 30 | 31
 export type Hour = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19 | 20 | 21 | 22 | 23
@@ -45,9 +47,14 @@ export default class DateTime extends Date {
     return super.getMonth() + 1
   }
 
+  private readonly without31Months = [2, 4, 6, 9, 11];
   public setDate(date: number): number {
     if (!implementsDay(date)) {
       throw new InvalidDateException();
+    }
+    if (this.without31Months.indexOf(this.getMonth()) > -1
+      && date > 30) {
+      throw new InvalidDateException(MESSAGES.ERROR.InvalidDayWithout31Day)
     }
     return super.setDate(date)
   }
