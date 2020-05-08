@@ -1,5 +1,7 @@
-import DateTime, {Day, Month, InvalidDateException} from "./datetime";
+import DateTime, {Day, Month, InvalidDateException, Hour, Minute} from "./datetime";
 import {MESSAGES} from "./dpmessages"
+
+const allHours: Hour[] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]
 
 describe("dateTimeのテスト", () => {
   test("コンストラクタにパラメータを指定しない場合でも、初期化に成功する", () => {
@@ -37,6 +39,13 @@ describe("dateTimeのテスト", () => {
           const dt = new DateTime({month: 1, day: d})
           expect(dt.getDate()).toBe(d)
         }
+      })
+    })
+
+    describe("hourを指定する", () => {
+      test.each(allHours)("hourを指定する: %i時", (hour) => {
+        const dt = new DateTime({hour: hour})
+        expect(dt.getHours()).toBe(hour)
       })
     })
   })

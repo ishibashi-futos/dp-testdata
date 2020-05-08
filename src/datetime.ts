@@ -28,8 +28,8 @@ export default class DateTime extends Date {
       if (options?.day) {
         this.setDate(options.day)
       }
-      if (options?.hour) {
-        this.setHours(options.hour)
+      if (options?.hour || options?.hour === 0) {
+        super.setHours(options.hour)
       }
       if (options?.minute) {
         this.setMinutes(options.minute)
