@@ -1,5 +1,4 @@
 import DateTime, {Day, InvalidDateException} from "./datetime";
-import {JestAssertionError} from "expect";
 
 describe("dateTimeのテスト", () => {
   test("コンストラクタにパラメータを指定しない場合でも、初期化に成功する", () => {
@@ -49,16 +48,6 @@ describe("dateTimeのテスト", () => {
           dt.setDate(d)
           expect(true).toBeFalsy()
         }).toThrowError(InvalidDateException)
-      })
-
-      test("a", () => {
-        const dt = new DateTime({month: 5, day: 1})
-        try {
-          dt.setDate(1)
-          expect(true).toBeFalsy()
-        } catch (e) {
-          expect(e).toBeInstanceOf(JestAssertionError)
-        }
       })
     })
   })

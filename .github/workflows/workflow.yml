@@ -1,0 +1,30 @@
+name: Node.js CI
+
+on:
+  push:
+    branches: [ master, feature_* ]
+  pull_request:
+    branches: [ master, feature_* ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [12.x]
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - run: npm install
+    - run: npx tsc && npx jest --coverage
+    - name: upload artifacts
+      uses: actions/upload-artifact@v1
+      with:
+        name: coverage
+        path: coverage/
