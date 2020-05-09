@@ -29,7 +29,7 @@ export type MonitoringCondition = "DF"
 
 export function toSql(vo: Diagnosreferencevo): string {
   return "INSERT INTO DIAGNOSREFERENCEVO "
-     + "(TASKID, STARTTIME, ENDTIME, AGENTID, AGENTTYPE, NODEIP, CLIENTIP, TOTALTIME, SYSTEMID, FUNCTIONID, SCREENID, ACTIONID, SESSIONID, USERID,"
+     + "(TASKID, STARTTIME, ENDTIME, AGENTID, AGENTTYPE, NODEIP, CLIENTIP, TOTALTIME, SYSTEMID, FUNCTIONID, SCREENID, ACTIONID, SESSIONID, USERID, "
      + "EXCEPTIONTYPE, USEDMEMORY, DELTAMEMORY, TOTALCOUNT, DPTOTALTIME, DPUSEDMEMORY, MONITORINGMODE, MONITORINGCONDITION, DIFFINTIME) VALUES("
      + `'${vo.taskId}', `
      + `'${vo.startTime}', `
@@ -54,5 +54,5 @@ export function toSql(vo: Diagnosreferencevo): string {
      + `'${vo.monitoringMode}', `
      + `'${vo.monitoringCondition}', `
      + `${vo.diffintTime}`
-     + ")"
+     + ");\n"
 }

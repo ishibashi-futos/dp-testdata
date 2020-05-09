@@ -1,12 +1,9 @@
 import Diagnosreferencevo, {toSql} from "./diagnosreferencevo"
-import {v4} from "uuid";
 import DateTime from "./datetime"
 import DateTimeFormatter from "./datetimeformatter"
-import {getRandomValue} from "./util"
 
 describe("SQL作成に関するテスト", () => {
   const formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS")
-  const maxMemory = 1024 * 1024 * 3
   const vo: Diagnosreferencevo = {
     taskId: "d2f539f3-4a5a-4668-8ae6-4263e7740438",
     startTime: formatter.format(new DateTime({year: 2020, month: 5, day: 1, hour: 5, minute: 55, second: 0, mills: 0})),
@@ -34,6 +31,6 @@ describe("SQL作成に関するテスト", () => {
   }
 
   test("toSql", () => {
-    expect(toSql(vo)).toBe("INSERT INTO DIAGNOSREFERENCEVO (TASKID, STARTTIME, ENDTIME, AGENTID, AGENTTYPE, NODEIP, CLIENTIP, TOTALTIME, SYSTEMID, FUNCTIONID, SCREENID, ACTIONID, SESSIONID, USERID,EXCEPTIONTYPE, USEDMEMORY, DELTAMEMORY, TOTALCOUNT, DPTOTALTIME, DPUSEDMEMORY, MONITORINGMODE, MONITORINGCONDITION, DIFFINTIME) VALUES('d2f539f3-4a5a-4668-8ae6-4263e7740438', '20200501055500000', '20200501055500999', 'b9fe9da1-8737-44cf-81ad-686e307cf9f2', 'JavaApplication', '127.0.0.1', '127.0.0.1', 46, 'SampleWebApp', 'jp.co.webtechnology.dpsample.web', 'CommonBtnLogout', 'execute', 'null', 'null', 'null', 667064, 2237838, 37, 2464, 1243854, 'DF', 'DF', 0)")
+    expect(toSql(vo)).toBe("INSERT INTO DIAGNOSREFERENCEVO (TASKID, STARTTIME, ENDTIME, AGENTID, AGENTTYPE, NODEIP, CLIENTIP, TOTALTIME, SYSTEMID, FUNCTIONID, SCREENID, ACTIONID, SESSIONID, USERID, EXCEPTIONTYPE, USEDMEMORY, DELTAMEMORY, TOTALCOUNT, DPTOTALTIME, DPUSEDMEMORY, MONITORINGMODE, MONITORINGCONDITION, DIFFINTIME) VALUES('d2f539f3-4a5a-4668-8ae6-4263e7740438', '20200501055500000', '20200501055500999', 'b9fe9da1-8737-44cf-81ad-686e307cf9f2', 'JavaApplication', '127.0.0.1', '127.0.0.1', 46, 'SampleWebApp', 'jp.co.webtechnology.dpsample.web', 'CommonBtnLogout', 'execute', 'null', 'null', 'null', 667064, 2237838, 37, 2464, 1243854, 'DF', 'DF', 0);\n")
   })
 })
