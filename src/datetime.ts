@@ -30,7 +30,7 @@ export default class DateTime extends Date {
       this.setFullYear(options.year)
     }
     if (options.month) {
-      this.setMonth(options.month - 1)
+      this.setMonth(options.month)
     }
     if (options.day) {
       this.setDate(options.day)
@@ -51,6 +51,10 @@ export default class DateTime extends Date {
 
   public getMonth(): number {
     return super.getMonth() + 1
+  }
+
+  public setMonth(month: number): number {
+    return super.setMonth(month - 1)
   }
 
   private readonly without31Months = [2, 4, 6, 9, 11];

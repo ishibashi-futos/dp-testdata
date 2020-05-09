@@ -67,11 +67,16 @@ describe("dateTimeのテスト", () => {
       })
     })
 
-    describe("millsを指定する", () => {
+    test("millsを指定する", () => {
       allMills.forEach(mills => {
         const dt = new DateTime({mills})
         expect(dt.getMilliseconds()).toBe(mills)
       })
+    })
+
+    test("すべての引数を指定する", () => {
+      const dt = new DateTime({year: 1990, month: 1, day: 1, hour: 0, minute: 0, second: 0, mills: 0})
+      expect(DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS").format(dt)).toBe("19900101000000000")
     })
   })
 

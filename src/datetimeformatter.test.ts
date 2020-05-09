@@ -1,4 +1,4 @@
-import DateTimeFormatter from "./datetimeformatter"
+import DateTimeFormatter, {InvalidFormatException} from "./datetimeformatter"
 import DateTime from "./datetime"
 
 describe("DateTimeFormatterのテスト", () => {
@@ -12,6 +12,30 @@ describe("DateTimeFormatterのテスト", () => {
     test("yyyyMMddに変換する(padなし)", () => {
       const dt = new DateTime({year: 1992, month: 11, day: 16})
       expect(formatter.format(dt)).toBe("19921116")
+    })
+
+    describe("yyyyMMddの文字列からDateTimeに変換する", () => {
+      test("parseに成功する", () => {
+        const str = "20200506"
+        const dt = formatter.parse(str)
+        expect(dt.getFullYear()).toBe(2020)
+        expect(dt.getMonth()).toBe(5)
+        expect(dt.getDate()).toBe(6)
+      })
+
+      test("長さが足りずエラーになる", () => {
+        const str = "2020"
+        expect(() => {
+          formatter.parse(str)
+        }).toThrowError(InvalidFormatException)
+      })
+
+      test("長さは足りるが数値以外が含まれておりエラーになる", () => {
+        const str = "yyyyMMdd"
+        expect(() => {
+          formatter.parse(str)
+        }).toThrowError(InvalidFormatException)
+      })
     })
   })
 
