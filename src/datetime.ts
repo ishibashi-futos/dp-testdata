@@ -104,6 +104,18 @@ export default class DateTime extends Date {
   public addMills(mills: number) {
     this.setMilliseconds(mills + this.getMilliseconds())
   }
+
+  public static copy(datetime: DateTime): DateTime {
+    return new DateTime({
+      year: datetime.getFullYear(),
+      month: datetime.getMonth() as Month,
+      day: datetime.getDate() as Day,
+      hour: datetime.getHours() as Hour,
+      minute: datetime.getMinutes() as Minute,
+      second: datetime.getSeconds() as Second,
+      mills: datetime.getMilliseconds() as MilliSecond
+    });
+  }
 }
 
 function implementsDay(arg: any): arg is Day {
