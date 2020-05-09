@@ -105,6 +105,11 @@ export default class DateTime extends Date {
     this.setMilliseconds(mills + this.getMilliseconds())
   }
 
+  /**
+   * DateTimeのディープコピーを作成します.
+   * 
+   * @param datetime コピー元のDatetimeインスタンス.
+   */
   public static copy(datetime: DateTime): DateTime {
     return new DateTime({
       year: datetime.getFullYear(),
