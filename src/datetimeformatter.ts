@@ -34,9 +34,14 @@ export default class DateTimeFormatter {
       return DateTimeFormatter.getHours(dt) + DateTimeFormatter.getMinutes(dt) + DateTimeFormatter.getSeconds(dt) + DateTimeFormatter.getMiliseconds(dt)
     },
     parse: (dateTime: string) => {
-      // ToDo: parse処理を実装する
-      // Lengthチェック, 数値チェックをかけて、あとはSplitしてコンストラクタに投げる.
-      return new DateTime()
+      validLength(dateTime, "HHmmssSSS".length)
+      validNumber(dateTime)
+      const dt = zeroDateTime()
+      dt.setHours(Number(dateTime.substring(0, 2)))
+      dt.setMinutes(Number(dateTime.substring(2, 4)))
+      dt.setSeconds(Number(dateTime.substring(4, 6)))
+      dt.setMilliseconds(Number(dateTime.substring(6, 9)))
+      return dt
     }
   }
 

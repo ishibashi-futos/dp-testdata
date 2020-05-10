@@ -49,6 +49,31 @@ describe("DateTimeFormatterのテスト", () => {
       const dt = new DateTime({hour: 23, minute: 59, second: 59, mills: 999})
       expect(formatter.format(dt)).toBe("235959999")
     })
+
+    describe("HHmmssSSSの文字列からDateTimeに変換する", () => {
+      test("parseに成功する", () => {
+        const str = "050607008"
+        const dt = formatter.parse(str)
+        expect(dt.getHours()).toBe(5)
+        expect(dt.getMinutes()).toBe(6)
+        expect(dt.getSeconds()).toBe(7)
+        expect(dt.getMilliseconds()).toBe(8)
+      })
+
+      test("長さが足りずエラーになる", () => {
+        const str = "0506"
+        expect(() => {
+          formatter.parse(str)
+        }).toThrowError(InvalidFormatException)
+      })
+
+      test("長さは足りるが数値以外が含まれておりエラーになる", () => {
+        const str = "HHmmssSSS"
+        expect(() => {
+          formatter.parse(str)
+        }).toThrowError(InvalidFormatException)
+      })
+    })
   })
 
   describe("yyyyMMddHHmmssSSS", () => {
