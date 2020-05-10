@@ -33,55 +33,52 @@ const monitoringTargets: MonitoringTarget[] = [
 
 const originDate = new DateTime({year: 2020, month: 5, day: 1, hour: 0, minute: 0, second: 0, mills: 0})
 const formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS")
-const dateRange = 30;
+const dateRange = 5;
 
 const createSql = (fd: number) => {
   Array.from({length: dateRange}, (x,v) => v+1).forEach(i => {
     const dt = DateTime.copy(originDate)
     dt.addDays(i)
-    Array.from({length: 23}, (x, v) => v+1).forEach(v => {
+    Array.from({length: 12}, (x, v) => v+1).forEach(v => {
       dt.addHours(1)
       const dtHours = DateTime.copy(dt)
-      Array.from({length: 6}, (x, v) => v+1).forEach((v) => {
-        dtHours.addMinutes(10)
-        monitoringTargets.forEach(target => {
-          const count = getRandomValue(1, 100)
-          for (let i = 0; i < count; i++) {
-            const startTime = DateTime.copy(dtHours)
-            startTime.addMills(getRandomValue(1, 600))
-            const endTime = DateTime.copy(dtHours)
-            endTime.addMills(999)
-            const vo: Diagnosreferencevo = {
-              taskId: v4(),
-              startTime: formatter.format(startTime),
-              endTime: formatter.format(endTime),
-              agentId: v4(),
-              agentType: "JavaApplication",
-              nodeIp: "127.0.0.1",
-              clientIp: "127.0.0.1",
-              systemId: "SampleWebApp",
-              ...target,
-              totalTime: getRandomValue(1, 6000),
-              sessionId: null,
-              userId: null,
-              exceptionType: null,
-              usedMemory: getRandomValue(1, 9999999),
-              deltaMemory: getRandomValue(1, 9999999),
-              totalCount: getRandomValue(5, 100),
-              dpUsedMemory: getRandomValue(1, 99999),
-              dpTotalTime: getRandomValue(1, 1000),
-              monitoringMode: "DF",
-              monitoringCondition: "DF",
-              diffintTime: 0
-            }
-            fs.writeFile(fd, toSql(vo), (err) => {
-              if (err) {
-                console.error(err)
-                return
-              }
-            })
+      monitoringTargets.forEach(target => {
+        const count = getRandomValue(1, 5)
+        for (let i = 0; i < count; i++) {
+          const startTime = DateTime.copy(dtHours)
+          startTime.addMills(getRandomValue(1, 600))
+          const endTime = DateTime.copy(dtHours)
+          endTime.addMills(999)
+          const vo: Diagnosreferencevo = {
+            taskId: v4(),
+            startTime: formatter.format(startTime),
+            endTime: formatter.format(endTime),
+            agentId: v4(),
+            agentType: "JavaApplication",
+            nodeIp: "127.0.0.1",
+            clientIp: "127.0.0.1",
+            systemId: "SampleWebApp",
+            ...target,
+            totalTime: getRandomValue(1, 6000),
+            sessionId: null,
+            userId: null,
+            exceptionType: null,
+            usedMemory: getRandomValue(1, 9999999),
+            deltaMemory: getRandomValue(1, 9999999),
+            totalCount: getRandomValue(5, 100),
+            dpUsedMemory: getRandomValue(1, 99999),
+            dpTotalTime: getRandomValue(1, 1000),
+            monitoringMode: "DF",
+            monitoringCondition: "DF",
+            diffintTime: 0
           }
-        })
+          fs.writeFile(fd, toSql(vo), (err) => {
+            if (err) {
+              console.error(err)
+              return
+            }
+          })
+        }
       })
     })
   })
