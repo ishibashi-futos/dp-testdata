@@ -140,8 +140,8 @@ function validLength(str: string, length: number): void {
 }
 
 /**
- * 基底日時（1990/1/1 00:00:00.000）を返す.
+ * 基底日時（1970/1/1 00:00:00.000）を返す.
  */
 function zeroDateTime(): DateTime {
-  return new DateTime({year: 1990, month: 1, day: 1, hour: 0, minute: 0, second: 0, mills: 0})
+  return new DateTime({year: 1970, month: 1, day: 1, hour: 0, minute: 0, second: 0, mills: 0})
 }

@@ -126,19 +126,18 @@ describe("dateTimeのテスト", () => {
 
       test("0ミリ秒から1000ミリ秒足すと、1秒繰り上がること", () => {
         const addValue = 1000
-        const dt = new DateTime({mills: 0})
-        const sec = dt.getSeconds()
+        const dt = new DateTime({second: 0, mills: 0})
         dt.addMills(addValue)
-        expect(dt.getSeconds()).toBe(sec+1)
+        expect(dt.getSeconds()).toBe(1)
         expect(dt.getMilliseconds()).toBe(0)
       })
 
       test("500ミリ秒から800ミリ秒引くと、１秒繰り下がること", () => {
         const addValue = -800
-        const dt = new DateTime({mills: 500})
+        const dt = new DateTime({second: 1, mills: 500})
         const sec = dt.getSeconds()
         dt.addMills(addValue)
-        expect(dt.getSeconds()).toBe(sec-1)
+        expect(dt.getSeconds()).toBe(0)
         expect(dt.getMilliseconds()).toBe(700)
       })
     })
